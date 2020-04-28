@@ -36,6 +36,8 @@ https://github.com/influxdata/telegraf/issues/2112
 
 ```txt
 https://github.com/nicolargo/docker-influxdb-grafana/blob/master/docker-compose.yml
+#
+https://github.com/jkehres/docker-compose-influxdb-grafana/blob/master/docker-compose.yml
 ```
 
 ```yaml
@@ -81,5 +83,9 @@ grafana:
 ##  generate a default telegraf.conf from docker
 
 ```bash
+# set docker image tag
+IMAGE_TAG_TELEGRAF=$(grep IMAGE_TAG_TELEGRAF .env |sed 's/.*=//')
+echo "IMAGE_TAG_TELEGRAF => $IMAGE_TAG_TELEGRAF"
 docker run --rm telegraf:${IMAGE_TAG_TELEGRAF} telegraf config > telegraf.conf
 ```
+
