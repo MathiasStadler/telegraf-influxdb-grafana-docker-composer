@@ -16,6 +16,7 @@ services:
       - INFLUXDB_REPORTING_DISABLED
       - INFLUXDB_HTTP_AUTH_ENABLED
       - INFLUXDB_WRITE_USER
+      - INFLUXDB_WRITE_USER_PASSWORD
     #env_file:
     #  - "env.influxdb"
     volumes:
