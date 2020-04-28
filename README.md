@@ -108,7 +108,7 @@ docker run --rm telegraf:${IMAGE_TAG_TELEGRAF} telegraf config > telegraf.conf
 ##
 
 ```bash
-IMAGE_TAG_TELEGRAF=$(grep IMAGE_TAG_INFLUXDB .env |sed 's/.*=//')
+IMAGE_TAG_INFLUXDB=$(grep IMAGE_TAG_INFLUXDB .env |sed 's/.*=//')
 echo "IMAGE_TAG_INFLUXDB => $IMAGE_TAG_INFLUXDB"
 docker run --rm influxdb:${IMAGE_TAG_INFLUXDB} influxd config > influxdb.conf
 ```
@@ -133,3 +133,7 @@ curl -G "http://somehost:8086/query?pretty=true" --data-urlencode "q=show databa
 ```bash
 
 ```
+
+
+
+https://github.com/influxdata/influxdata-docker/blob/master/influxdb/1.8/init-influxdb.sh
