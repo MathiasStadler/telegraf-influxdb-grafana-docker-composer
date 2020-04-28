@@ -8,8 +8,12 @@ services:
       - "8083:8083"
       - "8086:8086"
       - "8090:8090"
-    env_file:
-      - "env.influxdb"
+    environment:
+      - INFLUXDB_DB=db0
+      - INFLUXDB_ADMIN_USER=${INFLUXDB_USERNAME}
+      - INFLUXDB_ADMIN_PASSWORD=${INFLUXDB_PASSWORD}
+    #env_file:
+    #  - "env.influxdb"
     volumes:
       # Data persistency
       # sudo mkdir -p /srv/docker/influxdb/data
