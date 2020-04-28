@@ -5,9 +5,9 @@ services:
     restart: ${RESTART_POLICY}
     container_name: influxdb
     ports:
-      - "8083:8083"
+     # - "8083:8083"
       - "8086:8086"
-      - "8090:8090"
+     # - "8090:8090"
     environment:
       - INFLUXDB_DB
       - INFLUXDB_ADMIN_USER
