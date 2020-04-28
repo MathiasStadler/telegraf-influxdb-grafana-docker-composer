@@ -30,6 +30,12 @@ https://github.com/influxdata/telegraf/issues/2112
 
 ```
 
+## validate docker-compose.yml file
+
+```bash
+/usr/local/bin/docker-compose -f docker-compose.yml config
+```
+
 ## https://github.com/influxdata/telegraf/issues/2112
 
 - based on ideas of
