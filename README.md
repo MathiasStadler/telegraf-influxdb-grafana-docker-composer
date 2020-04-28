@@ -36,6 +36,13 @@ https://github.com/influxdata/telegraf/issues/2112
 /usr/local/bin/docker-compose -f docker-compose.yml config
 ```
 
+## find out which port used
+
+```bash
+netstat -ltnp | grep -w ':80' 
+sudo netstat -pna | grep 3000
+```
+
 ## https://github.com/influxdata/telegraf/issues/2112
 
 - based on ideas of

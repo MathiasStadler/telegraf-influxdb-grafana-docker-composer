@@ -28,7 +28,9 @@ services:
     image: telegraf:${IMAGE_TAG_TELEGRAF}
     restart: ${RESTART_POLICY}
     container_name: telegraf
-    links:
+    # links:
+    #  - influxdb
+    depends_on:
       - influxdb
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
@@ -54,9 +56,9 @@ services:
       ## - /srv/docker/grafana/data:/var/lib/grafana
       - grafana-storage:/var/lib/grafana
       - ./grafana-provisioning/:/etc/grafana/provisioning
-      networks:
+    networks:
         influxdb:
-          
+
 networks:
   influxdb:
 
