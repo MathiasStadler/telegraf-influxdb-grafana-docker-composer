@@ -27,7 +27,8 @@ https://www.jacobtomlinson.co.uk/monitoring/2016/06/23/running-telegraf-inside-a
 
 # 
 https://github.com/influxdata/telegraf/issues/2112
-
+#
+https://devconnected.com/how-to-setup-telegraf-influxdb-and-grafana-on-linux/
 ```
 
 ## validate docker-compose.yml file
@@ -102,3 +103,23 @@ echo "IMAGE_TAG_TELEGRAF => $IMAGE_TAG_TELEGRAF"
 docker run --rm telegraf:${IMAGE_TAG_TELEGRAF} telegraf config > telegraf.conf
 ```
 
+## start influx cli
+
+```bash
+IMAGE_TAG_TELEGRAF=$(grep IMAGE_TAG_TELEGRAF .env |sed 's/.*=//')
+
+```
+
+## influxdb HTTP API
+
+-  get all databases name
+
+```bash
+curl -G "http://somehost:8086/query?pretty=true" --data-urlencode "q=show databases"
+```
+
+- get rows schema from database
+
+```bash
+
+```
