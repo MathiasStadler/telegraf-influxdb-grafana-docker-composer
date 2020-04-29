@@ -155,7 +155,7 @@ sudo certtool --generate-privkey --outfile server-key.pem --bits 2048
 ## Create a public key for your InfluxDB server
 
 ```bash
- sudo certtool --generate-self-signed --load-privkey server-key.prm --outfile server-cert.pem
+ sudo certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem
 ```
 
 ## chmod keys
