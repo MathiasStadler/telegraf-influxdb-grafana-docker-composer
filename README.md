@@ -162,6 +162,8 @@ sudo certtool --generate-privkey --outfile server-key.pem --bits 2048
 
 ```bash
  sudo chown influxdb:influxdb server-key.pem server-cert.pem
+ @TODO determine the user if of influxdb
+ sudo chown 999:999 server-key.pem server-cert.pem
 ```
 
 ## config /etc/influxdb/influxdb.conf for https
