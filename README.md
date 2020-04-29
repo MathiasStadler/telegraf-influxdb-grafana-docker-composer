@@ -95,7 +95,6 @@ grafana:
     - /srv/docker/grafana/data:/var/lib/grafana
 ```
 
-
 ##  generate a default telegraf.conf from docker
 
 ```bash
@@ -137,3 +136,57 @@ curl -G "http://somehost:8086/query?pretty=true" --data-urlencode "q=show databa
 
 
 https://github.com/infcatluxdata/influxdata-docker/blob/master/influxdb/1.8/init-influxdb.sh
+
+
+## **https**
+
+## install gnutls-bin
+
+```bash
+sudo apt-get install gnutls-bin
+```
+
+## create server key
+
+```bash
+sudo certtool --generate-privkey --outfile server-key.pem --bits 2048
+```
+
+## Create a public key for your InfluxDB server
+
+```bash
+ sudo certtool --generate-self-signed --load-privkey server-key.prm --outfile server-cert.pem
+```
+
+## chmod keys
+
+```bash
+ sudo chown influxdb:influxdb server-key.pem server-cert.pem
+```
+
+## config /etc/influxdb/influxdb.conf for https
+
+```bash
+# Determines whether HTTPS is enabled.
+  https-enabled = true
+
+# The SSL certificate to use when HTTPS is enabled.
+https-certificate = "/etc/ssl/influxdb/server-cert.pem"
+
+# Use a separate private key location.
+https-private-key = "/etc/ssl/influxdb/server-key.pem"
+```
+
+## Configure Telegraf for HTTPS
+
+```bash
+# Configuration for sending metrics to InfluxDB
+[[outputs.influxdb]]
+
+# https, not http!
+urls = ["https://127.0.0.1:8086"]
+
+## Use TLS but skip chain & host verification
+insecure_skip_verify = true
+```
+
