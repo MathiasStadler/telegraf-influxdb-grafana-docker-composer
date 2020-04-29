@@ -136,4 +136,4 @@ curl -G "http://somehost:8086/query?pretty=true" --data-urlencode "q=show databa
 
 
 
-https://github.com/influxdata/influxdata-docker/blob/master/influxdb/1.8/init-influxdb.sh
+https://github.com/infcatluxdata/influxdata-docker/blob/master/influxdb/1.8/init-influxdb.sh
