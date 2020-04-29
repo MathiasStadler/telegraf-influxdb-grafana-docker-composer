@@ -192,3 +192,19 @@ urls = ["https://127.0.0.1:8086"]
 insecure_skip_verify = true
 ```
 
+## coonect influxdb via influx
+
+```bash
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'
+```
+
+## show series of db
+
+```bash
+# login with influx last step
+# use <databases>
+use telegraf
+show series
+# select * from <series> WHERE time > now() - 30s
+select * from cpu WHERE time > now() - 30s
+```
