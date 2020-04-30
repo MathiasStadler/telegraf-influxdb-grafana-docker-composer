@@ -20,7 +20,7 @@ datasources:
   # <string> custom UID which can be used to reference this datasource in other parts of the configuration, if not specified will be generated automatically
   uid: telegraf_influxdb_uid
   # <string> url
-  url: https://influxdb:8080
+  url: https://influxdb:8086
   # <string> Deprecated, use secureJsonData.password
   password: admin
   # <string> database user, if used
@@ -41,7 +41,7 @@ datasources:
   jsonData:
      graphiteVersion: "1.1"
      tlsAuth: false
-     tlsSkipVerify: false
+     tlsSkipVerify: true
      tlsAuthWithCACert: false
   # <string> json object of data that will be encrypted.
   secureJsonData:
@@ -55,3 +55,4 @@ datasources:
   version: 1
   # <bool> allow users to edit datasources from the UI.
   editable: true
+  httpMode: GET
