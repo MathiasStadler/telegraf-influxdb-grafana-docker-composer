@@ -127,10 +127,10 @@ IMAGE_TAG_TELEGRAF=$(grep IMAGE_TAG_TELEGRAF .env |sed 's/.*=//')
 curl -G "http://somehost:8086/query?pretty=true" --data-urlencode "q=show databases"
 ```
 
-- get rows schema from database
+- get series from database
 
 ```bash
-
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'show series'
 ```
 
 
