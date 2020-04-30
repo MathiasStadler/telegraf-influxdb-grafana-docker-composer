@@ -217,6 +217,10 @@ https://grafana.com/docs/grafana/latest/http_api/data_source/
 ```
 https://grafana.com/docs/grafana/latest/administration/provisioning/
 
+## better source
+https://github.com/grafana/grafana/blob/master/docs/sources/administration/provisioning.md
+
+
 ## sample datasource
 
 ```yaml

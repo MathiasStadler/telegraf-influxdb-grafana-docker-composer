@@ -22,25 +22,26 @@ datasources:
   # <string> url
   url: https://influxdb:8080
   # <string> Deprecated, use secureJsonData.password
-  password:
+  password: admin
   # <string> database user, if used
-  user:admin
+  user: admin
   # <string> database name, if used
-  database:
+  database: telegraf
   # <bool> enable/disable basic auth
-  basicAuth:true
+  basicAuth: true
   # <string> basic auth username
-  basicAuthUser:admin
+  basicAuthUser: admin
   # <string> Deprecated, use secureJsonData.basicAuthPassword
-  basicAuthPassword:admin
+  basicAuthPassword: admin
   # <bool> enable/disable with credentials headers
-  withCredentials:
+  withCredentials: true
   # <bool> mark as default datasource. Max one per org
-  isDefault:true
+  isDefault: true
   # <map> fields that will be converted to json and stored in jsonData
   jsonData:
      graphiteVersion: "1.1"
-     tlsAuth: true
+     tlsAuth: false
+     tlsSkipVerify: false
      tlsAuthWithCACert: false
   # <string> json object of data that will be encrypted.
   secureJsonData:
@@ -48,9 +49,9 @@ datasources:
     tlsClientCert: "..."
     tlsClientKey: "..."
     # <string> database password, if used
-    password:telegraf
+    password: telegraf
     # <string> basic auth password
-    basicAuthPassword:telegraf
+    basicAuthPassword: telegraf
   version: 1
   # <bool> allow users to edit datasources from the UI.
   editable: true
