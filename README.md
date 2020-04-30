@@ -209,3 +209,11 @@ show series
 select * from cpu WHERE time > now() - 30s
 ```
 
+
+## grafana Get all data sources
+
+```text
+https://grafana.com/docs/grafana/latest/http_api/data_source/
+```
+https://grafana.com/docs/grafana/latest/administration/provisioning/
+
