@@ -22,9 +22,12 @@ datasources:
   # <string> url
   url: https://influxdb:8086
   # <string> Deprecated, use secureJsonData.password
-  password: admin
+  # password: telegraf
+  secureJsonData:
+      password: telegraf
+      basicAuthPassword: admin
   # <string> database user, if used
-  user: admin
+  user: telegraf
   # <string> database name, if used
   database: telegraf
   # <bool> enable/disable basic auth
@@ -32,7 +35,8 @@ datasources:
   # <string> basic auth username
   basicAuthUser: admin
   # <string> Deprecated, use secureJsonData.basicAuthPassword
-  basicAuthPassword: admin
+  #secureJsonData:
+  # basicAuthPassword: admin
   # <bool> enable/disable with credentials headers
   withCredentials: true
   # <bool> mark as default datasource. Max one per org
@@ -51,8 +55,8 @@ datasources:
     # <string> database password, if used
     password: telegraf
     # <string> basic auth password
-    basicAuthPassword: telegraf
-  version: 1
+    # basicAuthPassword: telegraf
+  version: 2
   # <bool> allow users to edit datasources from the UI.
   editable: true
   httpMode: GET
