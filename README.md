@@ -27,7 +27,7 @@ https://hub.docker.com/r/grafana/grafana/
 # docker access to system
 https://www.jacobtomlinson.co.uk/monitoring/2016/06/23/running-telegraf-inside-a-container/
 
-# 
+# Run telegraf inside docker, how to collect net, processors input in the host? #2112
 https://github.com/influxdata/telegraf/issues/2112
 #
 https://devconnected.com/how-to-setup-telegraf-influxdb-and-grafana-on-linux/
