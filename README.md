@@ -281,3 +281,23 @@ datasources:
   # <bool> allow users to edit datasources from the UI.
   editable: false
 ```
+
+
+## TICK stack
+
+https://docs.influxdata.com/
+
+select 
+
+
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s   '
+
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'SELECT distinct("cpu") from (SELECT "cpu","host","usage_idle" FROM cpu WHERE time > now() - 20s GROUP BY *)' -format 'csv' --pretty
+
+https://stackoverflow.com/questions/39216606/how-to-use-distinct-function-in-influxdb
+
+
+SHOW TAG VALUES FROM "cpu" WITH KEY = "cpu"
+
+https://grafana.com/grafana/dashboards/928
+
