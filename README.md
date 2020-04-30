@@ -208,3 +208,4 @@ show series
 # select * from <series> WHERE time > now() - 30s
 select * from cpu WHERE time > now() - 30s
 ```
+
