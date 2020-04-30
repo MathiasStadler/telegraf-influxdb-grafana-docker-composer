@@ -33,13 +33,23 @@ services:
 
   telegraf:
     image: telegraf:${IMAGE_TAG_TELEGRAF}
+    network_mode: host
+    # https://docs.docker.com/compose/compose-file/
+    cap_add:
+      - NET_ADMIN
     restart: ${RESTART_POLICY}
     container_name: telegraf
     environment:
-      HOST_PROC: /rootfs/proc
-      HOST_SYS: /rootfs/sys
-      HOST_ETC: /rootfs/etc
-    # links:
+      ## HOST_PROC: /rootfs/proc
+      ## HOST_SYS: /rootfs/sys
+      ## HOST_ETC: /rootfs/etc
+      - HOST_ETC=/hostfs/etc
+      - HOST_PROC=/hostfs/proc
+      - HOST_SYS=/hostfs/sys
+      - HOST_VAR=/hostfs/var
+      - HOST_RUN=/hostfs/run
+      - HOST_MOUNT_PREFIX=/hostfs
+      # links:
     #  - influxdb
     depends_on:
       - influxdb
@@ -57,14 +67,9 @@ services:
       - /sys:/hostfs/sys:ro
       - /var:/hostfs/var:ro
       - /run:/hostfs/run:ro
-      - HOST_ETC=/hostfs/etc
-      - HOST_PROC=/hostfs/proc
-      - HOST_SYS=/hostfs/sys
-      - HOST_VAR=/hostfs/var
-      - HOST_RUN=/hostfs/run
-      - HOST_MOUNT_PREFIX=/hostfs
-    networks:
-      influxdb:
+    ## networks:
+      ## influxdb:
+      ## host:
 
   grafana:
     image: grafana/grafana:${IMAGE_TAG_GRAFANA}
@@ -91,6 +96,7 @@ services:
 
 networks:
   influxdb:
+  host:
 
 volumes:
   influxdb-storage:
