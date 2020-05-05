@@ -14,6 +14,9 @@ docker-compose -f tig-compose.yml logs -f
 
 # open grafana
 http://localhost:3000
+
+# down and remove nwtworks and voulmes
+docker-compose -f tig-compose.yml down -v
 ```
 
 
@@ -313,6 +316,8 @@ select
 
 
 docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s   '
+
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'telegraf' -password 'telegraf'  -database 'telegraf' -execute 'SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s  
 
 docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'SELECT distinct("cpu") from (SELECT "cpu","host","usage_idle" FROM cpu WHERE time > now() - 20s GROUP BY *)' -format 'csv' --pretty
 
