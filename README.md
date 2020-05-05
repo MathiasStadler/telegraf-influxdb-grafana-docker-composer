@@ -10,7 +10,7 @@ cd telegraf-influxdb-grafana-docker-composer && \
 certtool --generate-privkey --outfile server-key.pem --bits 2048 && \
 certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem --template cert.cfg && \
 docker-compose -f tig-compose.yml up -d && \
-docker-compose -f tig-compose logs -f
+docker-compose -f tig-compose.yml logs -f
 
 # open grafana
 http://localhost:3000
