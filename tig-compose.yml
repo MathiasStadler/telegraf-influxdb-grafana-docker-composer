@@ -96,6 +96,10 @@ services:
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      # @TODO not for end version
+      GF_SERVER_ROUTER_LOGGING: "true"
+      GF_LOG_LEVEL: "debug"
+      GF_LOG_MODE: "console file"
     networks:
       influxdb:
 
