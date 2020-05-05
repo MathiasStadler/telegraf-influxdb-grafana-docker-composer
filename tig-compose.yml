@@ -91,11 +91,11 @@ services:
       - grafana-storage:/var/lib/grafana
       - ./grafana-provisioning/:/etc/grafana/provisioning
       # from here: https://github.com/aerokube/selenoid-grafana-example/blob/master/docker-compose.yml
-      environment:
-        GF_AUTH_ANONYMOUS_ENABLED: "true"
-        GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
-      networks:
-        influxdb:
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+    networks:
+      influxdb:
 
 networks:
   influxdb:
