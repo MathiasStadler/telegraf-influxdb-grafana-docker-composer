@@ -24,10 +24,10 @@ datasources:
   # <string> Deprecated, use secureJsonData.password
   # password: telegraf
   secureJsonData:
-      password: telegraf
+      password: telegraf_write
       basicAuthPassword: admin
   # <string> database user, if used
-  user: telegraf
+  user: telegraf_write
   # <string> database name, if used
   database: telegraf
   # <bool> enable/disable basic auth
@@ -53,10 +53,11 @@ datasources:
     tlsClientCert: "..."
     tlsClientKey: "..."
     # <string> database password, if used
-    password: telegraf
+    password: telegraf_write
     # <string> basic auth password
     # basicAuthPassword: telegraf
   version: 2
   # <bool> allow users to edit datasources from the UI.
+  # @TODO change to false on the end
   editable: true
   httpMode: GET
