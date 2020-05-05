@@ -1,5 +1,4 @@
-# 
-
+# telegraf-influxdb-grafana-docker-composer
 
 ## housekeeping
 
@@ -10,7 +9,6 @@ git config --global user.EMAIL "email@mathias-stadler.de"
 # https://help.github.com/en/github/using-git/caching-your-github-password-in-git
 git config --global credential.helper 'cache --timeout=3600'
 ```
-
 
 ## source
 
@@ -104,10 +102,10 @@ echo "IMAGE_TAG_TELEGRAF => $IMAGE_TAG_TELEGRAF"
 docker run --rm telegraf:${IMAGE_TAG_TELEGRAF} telegraf config > telegraf.conf
 ```
 
-##
+## export IMAGE_TAG_INFLUXDB
 
 ```bash
-IMAGE_TAG_INFLUXDB=$(grep IMAGE_TAG_INFLUXDB .env |sed 's/.*=//')
+export IMAGE_TAG_INFLUXDB=$(grep IMAGE_TAG_INFLUXDB .env |sed 's/.*=//')
 echo "IMAGE_TAG_INFLUXDB => $IMAGE_TAG_INFLUXDB"
 docker run --rm influxdb:${IMAGE_TAG_INFLUXDB} influxd config > influxdb.conf
 ```
@@ -133,10 +131,7 @@ curl -G "http://somehost:8086/query?pretty=true" --data-urlencode "q=show databa
 docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'show series'
 ```
 
-
-
 https://github.com/infcatluxdata/influxdata-docker/blob/master/influxdb/1.8/init-influxdb.sh
-
 
 ## **https**
 
@@ -220,7 +215,6 @@ https://grafana.com/docs/grafana/latest/administration/provisioning/
 ## better source
 https://github.com/grafana/grafana/blob/master/docs/sources/administration/provisioning.md
 
-
 ## sample datasource
 
 ```yaml
@@ -281,7 +275,6 @@ datasources:
   # <bool> allow users to edit datasources from the UI.
   editable: false
 ```
-
 
 ## TICK stack
 
