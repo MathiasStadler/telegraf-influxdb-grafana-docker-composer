@@ -4,7 +4,7 @@
 ## housekeeping
 
 ```bash
-docker run -it -d -p 8080:8080 -v "/home/trapapa/playground/telegraf-influxdb-grafana-docker-composer:/home/coder/project" -u "$(id -u):$(id -g)" codercom/code-server:latest
+docker run -it -d -p 8080:8080 -v "/home/trapapa/playground/telegraf-influxdb-grafana-docker-composer:/home/coder/project" -u "$(id -u):$(id -g)" codercom/code-server:latest --cert
 git config --global user.name "Mathias Stadler"
 git config --global user.EMAIL "email@mathias-stadler.de"
 # https://help.github.com/en/github/using-git/caching-your-github-password-in-git
