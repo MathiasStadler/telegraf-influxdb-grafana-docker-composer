@@ -45,14 +45,14 @@ services:
       ## HOST_PROC: /rootfs/proc
       ## HOST_SYS: /rootfs/sys
       ## HOST_ETC: /rootfs/etc
-      - HOST_ETC: "/hostfs/etc"
-      - HOST_PROC: "/hostfs/proc"
-      - HOST_SYS: "/hostfs/sys"
-      - HOST_VAR: "/hostfs/var"
-      - HOST_RUN: "/hostfs/run"
-      - HOST_MOUNT_PREFIX: "/hostfs"
+       HOST_ETC: "/hostfs/etc"
+       HOST_PROC: "/hostfs/proc"
+       HOST_SYS: "/hostfs/sys"
+       HOST_VAR: "/hostfs/var"
+       HOST_RUN: "/hostfs/run"
+       HOST_MOUNT_PREFIX: "/hostfs"
       # real influx host
-      - INFLUXDB_URI: "http://influxdb:8086"
+       INFLUXDB_URI: "http://influxdb:8086"
       # links:
     #  - influxdb
     # depends_on:
