@@ -51,6 +51,8 @@ services:
       - HOST_VAR=/hostfs/var
       - HOST_RUN=/hostfs/run
       - HOST_MOUNT_PREFIX=/hostfs
+      # real influx host
+      - INFLUXDB_URI
       # links:
     #  - influxdb
     depends_on:
