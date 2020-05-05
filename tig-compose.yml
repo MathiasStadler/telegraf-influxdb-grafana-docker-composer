@@ -92,13 +92,9 @@ services:
       - ./grafana-provisioning/:/etc/grafana/provisioning
       # from here: https://github.com/aerokube/selenoid-grafana-example/blob/master/docker-compose.yml
       environment:
-      GF_AUTH_ANONYMOUS_ENABLED: "true"
-      GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
-      INFLUXDB_URI: "http://influxdb:8086"
-      INFLUXDB_DB: telegraf
-      INFLUXDB_USER: telegraf
-      INFLUXDB_USER_PASSWORD: supersecret
-    networks:
+        GF_AUTH_ANONYMOUS_ENABLED: "true"
+        GF_AUTH_ANONYMOUS_ORG_ROLE: "Admin"
+      networks:
         influxdb:
 
 networks:

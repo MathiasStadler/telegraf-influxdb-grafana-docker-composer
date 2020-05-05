@@ -9,8 +9,8 @@ git clone  https://github.com/MathiasStadler/telegraf-influxdb-grafana-docker-co
 cd telegraf-influxdb-grafana-docker-composer && \
 certtool --generate-privkey --outfile server-key.pem --bits 2048 && \
 certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem --template cert.cfg && \
-docker-compose -f tig-composer.yml up -d && \
-docke-compose -f tig-composer logs -f
+docker-compose -f tig-compose.yml up -d && \
+docker-compose -f tig-compose logs -f
 
 # open grafana
 http://localhost:3000
