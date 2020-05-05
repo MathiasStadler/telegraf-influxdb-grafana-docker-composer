@@ -58,7 +58,7 @@ datasources:
     basicAuthPassword: admin
     # <string> basic auth password
     # basicAuthPassword: telegraf
-  version: 3
+  version: 2
   # <bool> allow users to edit datasources from the UI.
   # @TODO change to false on the end
   editable: true
