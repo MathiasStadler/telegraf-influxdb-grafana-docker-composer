@@ -135,6 +135,8 @@ https://github.com/infcatluxdata/influxdata-docker/blob/master/influxdb/1.8/init
 
 ## **https**
 
+- https://www.gnutls.org/manual/html_node/certtool-Invocation.html
+
 ## install gnutls-bin
 
 ```bash
@@ -143,15 +145,24 @@ sudo apt-get install gnutls-bin
 
 ## create server key
 
-```bash
-sudo certtool --generate-privkey --outfile server-key.pem --bits 2048
-```
-
-## Create a public key for your InfluxDB server
+- HINT: no as root
 
 ```bash
- sudo certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem
+certtool --generate-privkey --outfile server-key.pem --bits 2048
 ```
+
+## Create a cert for your InfluxDB server
+
+```bash
+certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem
+```
+
+## Create a cert for your InfluxDB server non interactive 
+
+```bash
+certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem --template cert.cfg 
+```
+
 
 ## chmod keys
 
