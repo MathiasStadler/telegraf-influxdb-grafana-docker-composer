@@ -1,7 +1,7 @@
 # telegraf-influxdb-grafana-docker-composer
 
 
-## TL;DR just for test
+## TL;DR just for test **NOT** fit for productiuon
 
 ```bash
 cd && \
