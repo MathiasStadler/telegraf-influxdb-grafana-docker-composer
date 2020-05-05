@@ -23,9 +23,9 @@ datasources:
   url: https://influxdb:8086
   # <string> Deprecated, use secureJsonData.password
   # password: telegraf
-  secureJsonData:
-      password: telegraf_read
-      basicAuthPassword: admin
+  ## secureJsonData:
+     ##  password: telegraf_read
+     ## basicAuthPassword: admin
   # <string> database user, if used
   user: telegraf_read
   # <string> database name, if used
@@ -54,6 +54,8 @@ datasources:
     tlsClientKey: "..."
     # <string> database password, if used
     password: telegraf_read
+    ## password: telegraf_read
+    basicAuthPassword: admin
     # <string> basic auth password
     # basicAuthPassword: telegraf
   version: 3

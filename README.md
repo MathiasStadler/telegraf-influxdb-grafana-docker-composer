@@ -319,6 +319,14 @@ docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'adm
 
 docker exec -it influxdb influx -ssl -unsafeSsl -username 'telegraf' -password 'telegraf'  -database 'telegraf' -execute 'SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s  
 
+curl -k  -G 'https://localhost:8086/query?db=telegraf' -u telegraf_read:telegraf_read  --data-urlencode "q=SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s"
+
+
+
+# via url
+curl -k  -G 'https://localhost:8086/query?db=telegraf' -u admin:admin  --data-urlencode "q=SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s"
+
+
 docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'SELECT distinct("cpu") from (SELECT "cpu","host","usage_idle" FROM cpu WHERE time > now() - 20s GROUP BY *)' -format 'csv' --pretty
 
 https://stackoverflow.com/questions/39216606/how-to-use-distinct-function-in-influxdb
