@@ -82,7 +82,7 @@ services:
 
 networks:
   influxdb:
-  host:
+
 
 volumes:
   influxdb-storage:

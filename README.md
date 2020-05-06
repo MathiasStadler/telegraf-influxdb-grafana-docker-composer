@@ -353,3 +353,4 @@ make -j 4
 
 docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.13 make
 
+sudo tcpdump -i wlp3s0 port 8086
