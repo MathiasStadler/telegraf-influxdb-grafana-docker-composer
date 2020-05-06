@@ -29,35 +29,6 @@ services:
     networks:
       influxdb:
 
-  telegraf:
-    image: telegraf:${IMAGE_TAG_TELEGRAF}
-    network_mode: host
-    # https://docs.docker.com/compose/compose-file/
-    cap_add:
-      - NET_ADMIN
-    restart: ${RESTART_POLICY}
-    container_name: telegraf
-    environment:
-      - HOST_ETC
-      - HOST_PROC
-      - HOST_SYS
-      - HOST_VAR
-      - HOST_RUN
-      - HOST_MOUNT_PREFIX
-      # set here the real influx host
-      - INFLUXDB_URI
-    volumes:
-      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      # from here
-      # https://github.com/influxdata/telegraf/blob/master/docs/FAQ.md 
-      - /:/hostfs:ro
-      - /etc:/hostfs/etc:ro
-      - /proc:/hostfs/proc:ro
-      - /sys:/hostfs/sys:ro
-      - /var:/hostfs/var:ro
-      - /run:/hostfs/run:ro
-  
   grafana:
     image: grafana/grafana:${IMAGE_TAG_GRAFANA}
     restart: ${RESTART_POLICY}
@@ -82,7 +53,6 @@ services:
 
 networks:
   influxdb:
-
 
 volumes:
   influxdb-storage:
