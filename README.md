@@ -323,3 +323,33 @@ SHOW TAG VALUES FROM "cpu" WITH KEY = "cpu"
 
 https://grafana.com/grafana/dashboards/928
 
+
+
+## make telegram from source
+
+- clone
+
+```bash
+cd && cd playground
+git clone https://github.com/influxdata/telegraf.git
+cd telegraf 
+make -j 4
+```
+
+- update go 
+
+```bash
+# from here https://forum.golangbridge.org/t/go-unknown-subcommand-mod/15257/2 
+    First remove apt installed go : $ sudo apt-get remove go
+    Download the tar file for linux from the site https://golang.org/dl/ 719
+    Execute the command $ sudo tar -C /usr/local -xzf
+    In the file ~/.bash_aliases add the following lines:
+    export GOROOT="/usr/local/go"
+    export GOBIN="$HOME/go/bin"
+    mkdir -p $GOBIN
+    export PATH=$PATH:$GOROOT/bin:$GOBIN
+
+```
+
+docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp golang:1.13 make
+
