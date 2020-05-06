@@ -9,14 +9,14 @@ git clone  https://github.com/MathiasStadler/telegraf-influxdb-grafana-docker-co
 cd telegraf-influxdb-grafana-docker-composer && \
 certtool --generate-privkey --outfile server-key.pem --bits 2048 && \
 certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem --template cert.cfg && \
-docker-compose -f tig-compose.yml up -d && \
-docker-compose -f tig-compose.yml logs -f
+docker-compose -f t-compose.yml -f ig-compose.yml up -d && \
+docker-compose -f t-compose.yml -f ig-compose.yml logs -f
 
 # open grafana
 http://localhost:3000
 
 # down and remove nwtworks and voulmes
-docker-compose -f tig-compose.yml down -v
+docker-compose -f t-compose.yml -f ig-compose.yml down -v
 ```
 
 ## housekeeping
