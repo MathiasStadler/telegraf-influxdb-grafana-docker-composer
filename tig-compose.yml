@@ -5,9 +5,7 @@ services:
     restart: ${RESTART_POLICY}
     container_name: influxdb
     ports:
-     # - "8083:8083"
       - "8086:8086"
-     # - "8090:8090"
     environment:
       - INFLUXDB_DB
       - INFLUXDB_ADMIN_USER
@@ -19,8 +17,6 @@ services:
       - INFLUXDB_WRITE_USER_PASSWORD
       - INFLUXDB_READ_USER
       - INFLUXDB_READ_USER_PASSWORD
-    #env_file:
-    #  - "env.influxdb"
     volumes:
       # Data persistency
       # sudo mkdir -p /srv/docker/influxdb/data
@@ -42,9 +38,6 @@ services:
     restart: ${RESTART_POLICY}
     container_name: telegraf
     environment:
-      ## HOST_PROC: /rootfs/proc
-      ## HOST_SYS: /rootfs/sys
-      ## HOST_ETC: /rootfs/etc
       - HOST_ETC
       - HOST_PROC
       - HOST_SYS
@@ -53,16 +46,9 @@ services:
       - HOST_MOUNT_PREFIX
       # set here the real influx host
       - INFLUXDB_URI
-      # links:
-    #  - influxdb
-    # depends_on:
-    #  - influxdb
     volumes:
       - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      ## - /sys:/rootfs/sys:ro
-      ## - /proc:/rootfs/proc:ro
-      ## - /etc:/rootfs/etc:ro
       # from here
       # https://github.com/influxdata/telegraf/blob/master/docs/FAQ.md 
       - /:/hostfs:ro
@@ -71,27 +57,16 @@ services:
       - /sys:/hostfs/sys:ro
       - /var:/hostfs/var:ro
       - /run:/hostfs/run:ro
-    ## networks:
-      ## influxdb:
-      ## host:
-
+  
   grafana:
     image: grafana/grafana:${IMAGE_TAG_GRAFANA}
     restart: ${RESTART_POLICY}
     container_name: grafana
     ports:
       - "3000:3000"
-    ##env_file:
-    ##  - "env.grafana"
     user: "0"
-    #links:
-    #  - influxdb
-    depends_on:
-      - influxdb
     volumes:
       # Data persistency
-      # sudo mkdir -p /srv/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
-      ## - /srv/docker/grafana/data:/var/lib/grafana
       - grafana-storage:/var/lib/grafana
       - ./grafana-provisioning/:/etc/grafana/provisioning
       # from here: https://github.com/aerokube/selenoid-grafana-example/blob/master/docker-compose.yml
@@ -101,7 +76,7 @@ services:
       # @TODO not for end version
       GF_SERVER_ROUTER_LOGGING: "true"
       GF_LOG_LEVEL: "debug"
-      GF_LOG_MODE: "console file"
+      GF_LOG_MODE: "console"
     networks:
       influxdb:
 
