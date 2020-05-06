@@ -4,6 +4,7 @@
 ## TL;DR just for test **NOT** fit for productiuon
 
 ```bash
+# start the complete stack on one server
 cd && \
 git clone  https://github.com/MathiasStadler/telegraf-influxdb-grafana-docker-composer.git && \
 cd telegraf-influxdb-grafana-docker-composer && \
@@ -17,6 +18,15 @@ http://localhost:3000
 
 # down and remove nwtworks and voulmes
 docker-compose -f t-compose.yml -f ig-compose.yml down -v
+
+# add an other server to the dashboard
+cd && \
+git clone  https://github.com/MathiasStadler/telegraf-influxdb-grafana-docker-composer.git && \
+# INFLUXDB_URI="<url|ip of influxdb server>:8086"  docker-compose -f t-compose.yml down -v
+INFLUXDB_URI="https://influxdb-net:8086"  docker-compose -f t-compose.yml up -d
+
+# down and remove
+INFLUXDB_URI="https://influxdb-net:8086"  docker-compose -f t-compose.yml down -v
 ```
 
 ## housekeeping
