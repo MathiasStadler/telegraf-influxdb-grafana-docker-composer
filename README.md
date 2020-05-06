@@ -19,8 +19,6 @@ http://localhost:3000
 docker-compose -f tig-compose.yml down -v
 ```
 
-
-
 ## housekeeping
 
 ```bash
@@ -50,6 +48,8 @@ https://www.jacobtomlinson.co.uk/monitoring/2016/06/23/running-telegraf-inside-a
 https://github.com/influxdata/telegraf/issues/2112
 #
 https://devconnected.com/how-to-setup-telegraf-influxdb-and-grafana-on-linux/
+#
+https://github.com/infcatluxdata/influxdata-docker/blob/master/influxdb/1.8/init-influxdb.sh
 ```
 
 ## validate docker-compose.yml file
@@ -75,45 +75,6 @@ https://github.com/nicolargo/docker-influxdb-grafana/blob/master/docker-compose.
 https://github.com/jkehres/docker-compose-influxdb-grafana/blob/master/docker-compose.yml
 ```
 
-```yaml
-influxdb:
-  image: influxdb:latest
-  container_name: influxdb
-  ports:
-    - "8083:8083"
-    - "8086:8086"
-    - "8090:8090"
-  env_file:
-    - 'env.influxdb'
-  volumes:
-    # Data persistency
-    # sudo mkdir -p /srv/docker/influxdb/data
-    - /srv/docker/influxdb/data:/var/lib/influxdb
-
-telegraf:
-  image: telegraf:latest
-  container_name: telegraf
-  links:
-    - influxdb
-  volumes:
-    - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
-
-grafana:
-  image: grafana/grafana:latest
-  container_name: grafana
-  ports:
-    - "3000:3000"
-  env_file:
-    - 'env.grafana'
-  user: "0"
-  links:
-    - influxdb
-  volumes:
-    # Data persistency
-    # sudo mkdir -p /srv/docker/grafana/data; chown 472:472 /srv/docker/grafana/data
-    - /srv/docker/grafana/data:/var/lib/grafana
-```
-
 ##  generate a default telegraf.conf from docker
 
 ```bash
@@ -123,7 +84,7 @@ echo "IMAGE_TAG_TELEGRAF => $IMAGE_TAG_TELEGRAF"
 docker run --rm telegraf:${IMAGE_TAG_TELEGRAF} telegraf config > telegraf.conf
 ```
 
-## export IMAGE_TAG_INFLUXDB
+## export IMAGE_TAG_INFLUXDB to bash
 
 ```bash
 export IMAGE_TAG_INFLUXDB=$(grep IMAGE_TAG_INFLUXDB .env |sed 's/.*=//')
@@ -131,40 +92,76 @@ echo "IMAGE_TAG_INFLUXDB => $IMAGE_TAG_INFLUXDB"
 docker run --rm influxdb:${IMAGE_TAG_INFLUXDB} influxd config > influxdb.conf
 ```
 
-## start influx cli
+## start influx cli in bash
 
 ```bash
-IMAGE_TAG_TELEGRAF=$(grep IMAGE_TAG_TELEGRAF .env |sed 's/.*=//')
-
+export IMAGE_TAG_INFLUXDB=$(grep IMAGE_TAG_INFLUXDB .env |sed 's/.*=//')
+echo "IMAGE_TAG_INFLUXDB => $IMAGE_TAG_INFLUXDB"
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf'
 ```
+
+## execute query from cli via docker
+
+```bash
+# with admin user
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s   '
+# with datssource user
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'telegraf_read' -password 'telegraf_read'  -database 'telegraf' -execute 'SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s '
+# get all series of telegraf database
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'show series'
+```
+
+## execute influx from cli 
+
+```bash
+docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'
+```
+
+- sample query **IN** influx
+
+```bash
+## show series of db
+# login with influx last step
+# use <databases>
+use telegraf
+show series
+# select * from <series> WHERE time > now() - 30s
+select * from cpu WHERE time > now() - 30s
+```
+
 
 ## influxdb HTTP API
 
 -  get all databases name
 
 ```bash
+# without aurg agains database
 curl -G "http://somehost:8086/query?pretty=true" --data-urlencode "q=show databases"
+
+# with auth with datasource user
+# this must work for grafana
+curl -k  -G 'https://localhost:8086/query?db=telegraf' -u telegraf_read:telegraf_read  --data-urlencode "q=SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s"
+
+# admin user
+curl -k  -G 'https://localhost:8086/query?db=telegraf' -u admin:admin  --data-urlencode "q=SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s"
 ```
 
-- get series from database
 
-```bash
-docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'show series'
-```
 
-https://github.com/infcatluxdata/influxdata-docker/blob/master/influxdb/1.8/init-influxdb.sh
 
-## **https**
+
+## influxdb with **https**
 
 - https://www.gnutls.org/manual/html_node/certtool-Invocation.html
 
 ## install gnutls-bin
 
 ```bash
-sudo apt-get install gnutls-bin
+# ubuntu
+sudo apt-get install -y gnutls-bin
 ```
 
-## create server key
+## create private server key for influxdb server
 
 - HINT: no as root
 
@@ -172,28 +169,32 @@ sudo apt-get install gnutls-bin
 certtool --generate-privkey --outfile server-key.pem --bits 2048
 ```
 
-## Create a cert for your InfluxDB server
+## Create a cert for InfluxDB server
 
 ```bash
 certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem
 ```
 
-## Create a cert for your InfluxDB server non interactive 
+## Create a cert for InfluxDB server non interactive 
+
+- with parameter from template filecert.cfg
 
 ```bash
 certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem --template cert.cfg 
 ```
 
-
 ## chmod keys
-
+- @TODO check obsolete 
 ```bash
  sudo chown influxdb:influxdb server-key.pem server-cert.pem
  @TODO determine the user if of influxdb
  sudo chown 999:999 server-key.pem server-cert.pem
 ```
 
-## config /etc/influxdb/influxdb.conf for https
+## config influxdb.conf for https
+
+@TODO how 
+- create first a default config
 
 ```bash
 # Determines whether HTTPS is enabled.
@@ -213,31 +214,15 @@ https-private-key = "/etc/ssl/influxdb/server-key.pem"
 [[outputs.influxdb]]
 
 # https, not http!
-urls = ["https://127.0.0.1:8086"]
+# urls = ["https://127.0.0.1:8086"]
+# set by env variable
+urls = ["$INFLUXDB_URI"] # required
 
 ## Use TLS but skip chain & host verification
 insecure_skip_verify = true
 ```
 
-## coonect influxdb via influx
-
-```bash
-docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'
-```
-
-## show series of db
-
-```bash
-# login with influx last step
-# use <databases>
-use telegraf
-show series
-# select * from <series> WHERE time > now() - 30s
-select * from cpu WHERE time > now() - 30s
-```
-
-
-## grafana Get all data sources
+## grafana get all data sources
 
 ```text
 https://grafana.com/docs/grafana/latest/http_api/data_source/
@@ -312,12 +297,7 @@ datasources:
 
 https://docs.influxdata.com/
 
-select 
 
-
-docker exec -it influxdb influx -ssl -unsafeSsl -username 'admin' -password 'admin'  -database 'telegraf' -execute 'SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s   '
-
-docker exec -it influxdb influx -ssl -unsafeSsl -username 'telegraf' -password 'telegraf'  -database 'telegraf' -execute 'SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s  
 
 curl -k  -G 'https://localhost:8086/query?db=telegraf' -u telegraf_read:telegraf_read  --data-urlencode "q=SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s"
 
