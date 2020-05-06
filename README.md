@@ -146,10 +146,6 @@ curl -k  -G 'https://localhost:8086/query?db=telegraf' -u telegraf_read:telegraf
 curl -k  -G 'https://localhost:8086/query?db=telegraf' -u admin:admin  --data-urlencode "q=SELECT "host","cpu","usage_idle" FROM cpu WHERE time > now() - 60s"
 ```
 
-
-
-
-
 ## influxdb with **https**
 
 - https://www.gnutls.org/manual/html_node/certtool-Invocation.html
@@ -190,6 +186,19 @@ certtool --generate-self-signed --load-privkey server-key.pem --outfile server-c
  @TODO determine the user if of influxdb
  sudo chown 999:999 server-key.pem server-cert.pem
 ```
+
+## ERROR message at start 
+
+- message
+
+```txt
+influxdb    | run: open server: open service: tls: failed to find any PEM data in certificate input
+````
+
+- solution 
+
+create keys new and check the size of it
+
 
 ## config influxdb.conf for https
 
