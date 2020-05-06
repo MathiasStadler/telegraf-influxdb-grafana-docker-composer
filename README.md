@@ -170,9 +170,7 @@ certtool --generate-privkey --outfile server-key.pem --bits 2048
 ```bash
 certtool --generate-self-signed --load-privkey server-key.pem --outfile server-cert.pem
 ```
-
-## Create a cert for InfluxDB server non interactive 
-
+- or non interactive 
 - with parameter from template filecert.cfg
 
 ```bash
