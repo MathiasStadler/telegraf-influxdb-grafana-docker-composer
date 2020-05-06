@@ -50,6 +50,10 @@ https://github.com/influxdata/telegraf/issues/2112
 https://devconnected.com/how-to-setup-telegraf-influxdb-and-grafana-on-linux/
 #
 https://github.com/infcatluxdata/influxdata-docker/blob/master/influxdb/1.8/init-influxdb.sh
+#
+https://grafana.com/grafana/dashboards/10346
+#
+
 ```
 
 ## validate docker-compose.yml file
@@ -85,6 +89,13 @@ docker run --rm telegraf:${IMAGE_TAG_TELEGRAF} telegraf config > telegraf.conf
 ```
 
 ## export IMAGE_TAG_INFLUXDB to bash
+
+```bash
+export IMAGE_TAG_INFLUXDB=$(grep IMAGE_TAG_INFLUXDB .env |sed 's/.*=//')
+echo "IMAGE_TAG_INFLUXDB => $IMAGE_TAG_INFLUXDB"
+```
+
+##  generate a default influxdb.conf from docker
 
 ```bash
 export IMAGE_TAG_INFLUXDB=$(grep IMAGE_TAG_INFLUXDB .env |sed 's/.*=//')
